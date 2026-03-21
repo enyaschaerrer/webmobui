@@ -8,6 +8,7 @@ import './pages/page-artists.js'
 import './pages/page-home.js'
 import './pages/page-player.js'
 import './pages/page-songs.js'
+import './pages/page-song-details.js'
 
 const router = () => {
   const main = document.querySelector('main')
@@ -18,6 +19,9 @@ const router = () => {
 
   else if (hashs[0] == '#player')
     main.innerHTML = '<page-player />'
+
+  else if (hashs[0] == '#songs' && hashs[1])
+    main.innerHTML = `<page-song-details song-id="${hashs[1]}" />`
 
   else if (hashs[0] == '#search' && hashs[1])
     main.innerHTML = `<page-search-songs query="${hashs[1]}" />`
@@ -35,3 +39,8 @@ const router = () => {
 window.addEventListener('hashchange', router)
 
 router()
+
+window.addEventListener('offline', (e) => document.body.classList.add('offline'))
+window.addEventListener('online', (e) => document.body.classList.remove('offline'))
+
+navigator.serviceWorker.register('/serviceworker.js')
